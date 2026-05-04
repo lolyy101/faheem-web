@@ -32,6 +32,8 @@ export const registerUser = async (data: {
   }
 };
 
+export const register = registerUser;
+
 // ================= LOGIN =================
 export const login = async (data: any) => {
   const res = await fetch(`${API_URL}/auth/login`, {
@@ -282,3 +284,21 @@ export const forgotPassword = async (data: { email: string }) => {
 
   return json;
 };
+
+const api = {
+  registerUser,
+  register,
+  login,
+  getMe,
+  getCourses,
+  getCourseById,
+  addCourse,
+  deleteCourse,
+  getLessons,
+  addLesson,
+  deleteLesson,
+  getLessonsSummary,
+  forgotPassword,
+};
+
+export default api;
