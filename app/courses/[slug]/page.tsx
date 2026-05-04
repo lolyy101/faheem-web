@@ -10,13 +10,15 @@ import { notFound } from "next/navigation";
 import { coursesData } from "@/app/data/courses";
 
 type Props = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
-export default function CourseDetailsPage({ params }: Props) {
-  const course = coursesData.find((item) => item.slug === params.slug);
+export default async function CourseDetailsPage({ params }: Props) {
+  const { slug } = await params;
+
+  const course = coursesData.find((item) => item.slug === slug);
 
   if (!course) return notFound();
 
@@ -122,7 +124,11 @@ export default function CourseDetailsPage({ params }: Props) {
               </div>
             </div>
 
-            <div className={`epic-lesson-status ${lesson.completed ? "done" : "pending"}`}>
+            <div
+              className={`epic-lesson-status ${
+                lesson.completed ? "done" : "pending"
+              }`}
+            >
               {lesson.completed ? <CheckCircle2 size={22} /> : null}
             </div>
           </div>
