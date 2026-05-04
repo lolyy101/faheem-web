@@ -1,65 +1,76 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Globe, Headphones, Shield, User } from "lucide-react";
+import AuthCard from "@/components/auth/AuthCard";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="faheem-page">
+      <section className="mobile-frame">
+        <div className="screen-content home-screen" dir="rtl">
+          <div className="top-language">
+            <div className="lang-circle">
+              <Globe size={18} />
+            </div>
+
+            <Link href="/en" className="lang-label">
+              EN
+            </Link>
+          </div>
+
+          <div className="home-logo-wrap">
+            <div className="home-logo-glow" />
+            <img src="/logo.png" alt="Faheem Logo" className="home-logo" />
+          </div>
+
+          <h1 className="hero-title-ar">مرحبًا بك في فهيم</h1>
+
+          <p className="hero-text">
+            منصة رقمية مبتكرة تهدف إلى تسهيل التواصل وتعزيز تجربة المستخدم.
           </p>
+
+          <p className="hero-subtext">
+            يرجى اختيار مستوى الوصول للبدء
+            <br />
+            في رحلتك الرقمية.
+          </p>
+
+          <div className="cards-stack">
+            <Link href="/login?role=user" className="card-link">
+              <AuthCard
+                title="المستخدم"
+                description="يوفر وصولًا شخصيًا إلى أدوات مدعومة بالذكاء الاصطناعي، مثل الترجمة، المساعد الصوتي، وتقنيات التعرف البصري"
+                icon={<User size={22} strokeWidth={2.2} />}
+                dir="rtl"
+              />
+            </Link>
+
+            <Link href="/login?role=admin" className="card-link">
+              <AuthCard
+                title="مدير النظام"
+                description="إدارة سياسات الوصول داخل النظام، التحكم في صلاحيات المستخدمين، ومتابعة تحليلات الاستخدام"
+                icon={<Shield size={22} strokeWidth={2.2} />}
+                dir="rtl"
+              />
+            </Link>
+
+            <Link href="/login?role=support" className="card-link">
+              <AuthCard
+                title="الدعم الفني"
+                description="تقديم الدعم التقني، صيانة النظام، وإدارة إعدادات البنية التحتية"
+                icon={<Headphones size={22} strokeWidth={2.2} />}
+                dir="rtl"
+              />
+            </Link>
+          </div>
+
+          <div className="bottom-auth-link">
+            ليس لديك حساب؟{" "}
+            <Link href="/signup">
+              <span>إنشاء حساب</span>
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }
