@@ -3,7 +3,6 @@
 import MobileChrome from "@/components/layout/MobileChrome";
 import { Mic, Sparkles, Volume2, Waves } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import api from "@/lib/api";
 import { ENDPOINTS } from "@/lib/endpoints";
 
 declare global {
@@ -54,10 +53,16 @@ export default function SpeechTranslationPage() {
       setTranscript(cleanText || "...");
 
       try {
-        await api.post(ENDPOINTS.aiTranslations, {
-          text: cleanText,
-          source: "speech",
-          target: "sign",
+        await fetch(ENDPOINTS.aiTranslations, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            text: cleanText,
+            source: "speech",
+            target: "sign",
+          }),
         });
       } catch {
         // تجاهل الخطأ مؤقتًا حتى لا تتوقف التجربة

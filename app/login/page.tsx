@@ -1,16 +1,11 @@
 "use client";
 
-import {
-  Lock,
-  Mail,
-  ShieldCheck,
-  Sparkles,
-} from "lucide-react";
-import { useMemo, useState } from "react";
+import { Lock, Mail, ShieldCheck, Sparkles } from "lucide-react";
+import { Suspense, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { UserRole } from "@/lib/mockAuth";
 
-export default function ArabicLoginPage() {
+function ArabicLoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -61,12 +56,12 @@ export default function ArabicLoginPage() {
       const res = await fetch("http://localhost:8080/api/auth/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email: normalizedEmail,
-          password: normalizedPassword
-        })
+          password: normalizedPassword,
+        }),
       });
 
       const data = await res.json();
@@ -96,8 +91,8 @@ export default function ArabicLoginPage() {
       } else {
         router.push("/home");
       }
-    } catch (err: any) {
-      setError(err?.message || "فشل تسجيل الدخول");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "فشل تسجيل الدخول");
     } finally {
       setLoading(false);
     }
@@ -168,13 +163,14 @@ export default function ArabicLoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   onKeyDown={handleKeyDown}
                 />
-            </div>
-             <button
-              type="button"
-              className="forgot-password-link"
-              onClick={() => router.push("/forgot-password")}
-                >
-                  نسيت كلمة المرور؟
+              </div>
+
+              <button
+                type="button"
+                className="forgot-password-link"
+                onClick={() => router.push("/forgot-password")}
+              >
+                نسيت كلمة المرور؟
               </button>
             </div>
 
@@ -192,5 +188,13 @@ export default function ArabicLoginPage() {
         </div>
       </section>
     </main>
+  );
+}
+
+export default function ArabicLoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <ArabicLoginContent />
+    </Suspense>
   );
 }

@@ -2,7 +2,7 @@
 
 import MobileChrome from "@/components/layout/MobileChrome";
 import { Award, Download, Share2, Sparkles } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -20,7 +20,7 @@ type CertificateItem = {
   created_at?: string;
 };
 
-export default function CertificatePage() {
+function CertificateContent() {
   const searchParams = useSearchParams();
   const certificateRef = useRef<HTMLDivElement | null>(null);
 
@@ -142,11 +142,9 @@ export default function CertificatePage() {
         return;
       }
 
-      const file = new File(
-        [blob],
-        `${certificate.certificate_number}.png`,
-        { type: "image/png" }
-      );
+      const file = new File([blob], `${certificate.certificate_number}.png`, {
+        type: "image/png",
+      });
 
       if (
         navigator.share &&
@@ -299,5 +297,13 @@ export default function CertificatePage() {
         </div>
       </div>
     </MobileChrome>
+  );
+}
+
+export default function CertificatePage() {
+  return (
+    <Suspense fallback={null}>
+      <CertificateContent />
+    </Suspense>
   );
 }
